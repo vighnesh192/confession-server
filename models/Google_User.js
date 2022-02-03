@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var Google_User = new Schema({
+var googleUser = new Schema({
     googleId: {
         type: String,
         default: ''
@@ -13,4 +13,4 @@ var Google_User = new Schema({
     }
 })
 
-module.exports = mongoose.model('Google_User', Google_User);
+module.exports = mongoose.model('googleUser', googleUser);
