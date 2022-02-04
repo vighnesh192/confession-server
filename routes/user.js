@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
     // if yes, give the user a token for subsequent protected requests
     if(googleUser) {
         const token = jwt.sign(googleUser.googleId, process.env.SECRET)
-        res.json({ token });
+        res.json({ token, success: true });
     }
 
     // else, Register the user in the DB and send a token
@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
             googleId
         })
         const token = jwt.sign(newGoogleUser.googleId, process.env.SECRET)
-        res.json({ token, user });
+        res.json({ token, user, success: true });
     }
 })
 
