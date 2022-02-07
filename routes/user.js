@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const GoogleUser = require('../models/Google_User');
 const User = require('../models/User');
-
+const Confession = require('../models/User')
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -29,6 +29,15 @@ router.post('/login', async (req, res) => {
         })
         const token = jwt.sign(newGoogleUser.googleId, process.env.SECRET)
         res.json({ token, user, success: true });
+    }
+})
+
+router.post('/confession', async(req,res) => {
+    try {
+        const confession = new Confession(req.body)
+        const result = await confession.save();
+    } catch (e) {
+        console.log(e);
     }
 })
 
