@@ -35,6 +35,7 @@ router.post('/confession', async(req,res) => {
     try {
         const confession = new Confession(req.body)
         const result = await confession.save();
+        res.status(201).send("Data Added!");
         console.log(result);
     } catch (e) {
         console.log(e);

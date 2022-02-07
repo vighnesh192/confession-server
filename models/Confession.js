@@ -7,7 +7,7 @@ const Confession = new mongoose.Schema({
     },
     message:{
         type:String,
-        required:true
+        required:true,
     }
 })
 module.exports = mongoose.model('Confession', Confession);
