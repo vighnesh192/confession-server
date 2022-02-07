@@ -22,17 +22,4 @@ var User = new Schema({
 }, {
     timestamps: true
 })
-
-var Confession = new Schema({
-    username:{
-        type:String,
-        required:true
-    },
-    message:{
-        type:String,
-        required:true,
-    }
-})
-
 module.exports = mongoose.model('User', User);
-module.exports = mongoose.model('Confession',Confession);

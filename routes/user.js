@@ -1,10 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const Confession = require('../models/Confession');
 require('dotenv').config();
-
 const GoogleUser = require('../models/Google_User');
 const User = require('../models/User');
-const Confession = require('../models/User')
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -36,6 +35,7 @@ router.post('/confession', async(req,res) => {
     try {
         const confession = new Confession(req.body)
         const result = await confession.save();
+        console.log(result);
     } catch (e) {
         console.log(e);
     }
