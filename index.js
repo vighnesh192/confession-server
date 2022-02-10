@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const userRouter = require('./routes/user');
+const confessionRouter = require('./routes/confession');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/user', userRouter);
+app.use('/confession', confessionRouter);
 
 //DB Config
 const url = process.env.MONGO_URI;
