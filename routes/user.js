@@ -1,5 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const { ensureAuth } = require('../middlewares/auth');
 const Confession = require('../models/Confession');
 require('dotenv').config();
 const GoogleUser = require('../models/Google_User');
@@ -31,12 +32,11 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/confession', async(req,res) => {
+router.post('/confession', ensureAuth, async (req,res) => {
     try {
         const confession = new Confession(req.body)
         const result = await confession.save();
-        res.status(201).send("Data Added!");
-        console.log(result);
+        res.status(201).send({ result, success: true });
     } catch (e) {
         console.log(e);
     }
