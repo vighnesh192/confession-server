@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Confession = new mongoose.Schema({
-    username :{
+    college :{
         type:String,
         required:true
     },
