@@ -10,13 +10,16 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     // Get these details from RN after oauth
     const { googleId, firstName, lastName, avatar, email } = req.body;
+    console.log("GOOGLE_ID", googleId)
 
     // Check if the user is present in the DB
     const googleUser = await GoogleUser.findOne({ googleId }).exec();
 
     // if yes, give the user a token for subsequent protected requests
     if(googleUser) {
-        const token = jwt.sign(googleUser.googleId, process.env.SECRET)
+        console.log("GOOGLE_USER", googleUser)
+        const token = jwt.sign(googleUser.userId.toString(), process.env.SECRET)
+        console.log("TOKEN", token)
         res.json({ token, success: true });
     }
 
@@ -27,7 +30,7 @@ router.post('/login', async (req, res) => {
             userId: user.id,
             googleId
         })
-        const token = jwt.sign(newGoogleUser.googleId, process.env.SECRET)
+        const token = jwt.sign(user.id, process.env.SECRET)
         res.json({ token, user, success: true });
     }
 })
