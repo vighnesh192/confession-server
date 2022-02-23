@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
+const User = require('../models/User');
 
 module.exports = {
-    ensureAuth: (req, res, next) => {
+    ensureAuth: async (req, res, next) => {
         const authHeader = req.headers.authorization;
         if(authHeader) {
             const token = authHeader.split(' ')[1];
@@ -12,7 +13,14 @@ module.exports = {
                     // Forbidden:- the server understands the request but refuses to authorize it
                     return res.sendStatus(403).send(err);
                 }
-                next();
+                try {
+                    const userDoc = await User.findById(user).exec();
+                    req.user = user;
+                    next();
+                } catch (error) {
+                    console.log("AUTH Middleware:-", error);
+                    res.sendStatus(403);
+                }
             })
         }
         else {
