@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
         console.log("GOOGLE_USER", googleUser)
         const token = jwt.sign(googleUser.userId.toString(), process.env.SECRET)
         console.log("TOKEN", token)
-        res.json({ token, success: true });
+        res.json({ token, userId: googleUser.userId, success: true });
     }
 
     // else, Register the user in the DB and send a token
@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
             googleId
         })
         const token = jwt.sign(user.id, process.env.SECRET)
-        res.json({ token, user, success: true });
+        res.json({ token, userId: user.id, success: true });
     }
 })
 
