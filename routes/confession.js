@@ -8,7 +8,17 @@ const router = express.Router();
 router.get('/confessions', async (req, res) => {
     try {
         const confessions = await Confession.find().exec();
-        res.json({ confessions, success: true });
+        
+        const finalConfessions = await confessions.reduce(async (result, confession) => {
+            const likes = await Likes_Dislikes.find({ confessionId: confession._id, liked: true }).exec();
+            const dislikes = await Likes_Dislikes.find({ confessionId: confession._id, disliked: true }).exec();
+            const confWithLikesDislikes = { ...confession._doc, likes, dislikes }
+            const resultP = await result;
+            resultP.push(confWithLikesDislikes);
+            return resultP;
+        }, [])
+
+        res.json({ confessions: finalConfessions, success: true });
     } catch (error) {
         console.log("Error:-", error);
         res.json({ error, success: false });
@@ -18,7 +28,17 @@ router.get('/confessions', async (req, res) => {
 router.get('/confessions/:college', async (req, res) => {
     try {
         const confessions = await Confession.find({ college: req.params.college }).exec();
-        res.json({ confessions, success: true });
+
+        const finalConfessions = await confessions.reduce(async (result, confession) => {
+            const likes = await Likes_Dislikes.find({ confessionId: confession._id, liked: true }).exec();
+            const dislikes = await Likes_Dislikes.find({ confessionId: confession._id, disliked: true }).exec();
+            const confWithLikesDislikes = { ...confession._doc, likes, dislikes }
+            const resultP = await result;
+            resultP.push(confWithLikesDislikes);
+            return resultP;
+        }, [])
+
+        res.json({ confessions: finalConfessions, success: true });
     } catch (error) {
         console.log("Error:-", error);
         res.json({ error, success: false });

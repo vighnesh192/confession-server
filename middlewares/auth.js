@@ -7,7 +7,7 @@ module.exports = {
         if(authHeader) {
             const token = authHeader.split(' ')[1];
 
-            jwt.verify(token, process.env.SECRET, (err, user) => {
+            jwt.verify(token, process.env.SECRET, async (err, user) => {
                 if(err) {
                     console.log(err);
                     // Forbidden:- the server understands the request but refuses to authorize it
