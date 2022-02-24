@@ -48,7 +48,7 @@ router.get('/confessions/:college', async (req, res) => {
 router.post('/like_dislike', async (req, res) => {
     try {
         const { confessionId, userId, liked, disliked } = req.body;
-        const confession = await Likes_Dislikes.find({ confessionId, userId }).exec();
+        const confession = await Likes_Dislikes.findOne({ confessionId, userId }).exec();
         let result;
         if(confession) {
             if(!liked && !disliked) {
