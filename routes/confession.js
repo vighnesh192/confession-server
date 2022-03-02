@@ -1,4 +1,5 @@
 const express = require('express');
+const req = require('express/lib/request');
 const { ensureAuth } = require('../middlewares/auth');
 const Confession = require('../models/Confession');
 const Likes_Dislikes = require('../models/Likes_Dislikes');
@@ -71,5 +72,25 @@ router.post('/like_dislike', async (req, res) => {
         res.json({ error, success: false });
     }
 })
+
+router.get('/like_dislike', async(req,res) =>{
+    try {
+        const confessions = await Confession.find().exec()
+        const finalConfessions = await confessions.reduce(async (result, confession) => {
+            const likes = await Likes_Dislikes.find({ confessionId: confession._id, liked: true }).exec();
+            const dislikes = await Likes_Dislikes.find({ confessionId: confession._id, disliked: true }).exec();
+            const confWithLikesDislikes = { ...confession._doc, likes, dislikes }
+            const resultP = await result;
+            resultP.push(confWithLikesDislikes);
+            return resultP;
+        }, [])
+
+        res.json({ confessions: finalConfessions, success: true });
+    } catch (error) {
+        console.log("Error:-", error);
+        res.json({ error, success: false });
+    }
+})
+
 
 module.exports = router;

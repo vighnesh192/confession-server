@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const userRouter = require('./routes/user');
 const confessionRouter = require('./routes/confession');
 const collegeRouter = require('./routes/college');
+const sortRouter = require('./routes/sort');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter);
 app.use('/confession', confessionRouter);
 app.use('/college', collegeRouter);
+app.use('/sort', sortRouter);
 
 //DB Config
 const url = process.env.MONGO_URI;
