@@ -34,6 +34,10 @@ app.get("/privacy-policy", (req, res) => {
     res.sendFile(path.join(__dirname, "public/PrivacyPolicy.html"));
 });
 
+app.get("/terms-of-service", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/termsOfService.html"));
+});
+
 app.use("/user", userRouter);
 app.use("/confession", confessionRouter);
 app.use("/college", collegeRouter);
